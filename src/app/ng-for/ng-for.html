@@ -1,0 +1,47 @@
+<div class="col-4">
+
+<div class="m-1 border-2 rounded-lg border-b-cyan-900">
+  <select name="" id="" class="w-full p-2 border border-gray-300 rounded-md">
+    <option [value]="emp.empNumber" *ngFor="let emp of employees">
+      {{emp.empName}} - {{emp.empEmail}}
+    </option>
+  </select>
+</div>
+
+<div class="col-4">
+   <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Employee Name</th>
+        <th>Employee Number</th>
+        <th>Employee Email</th>
+        <th>Department</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of employees">
+        <td>{{emp.empName}}</td>
+        <td>{{emp.empNumber}}</td>
+        <td>{{emp.empEmail}}</td>
+        <td>{{emp.empDept}}</td>
+      </tr>
+    </tbody>
+   </table>
+</div>
+
+<div class="row text-center">
+  <div class="col-4">
+    <select name="" class="p-2">
+      <!-- <option [value]="emp.empNumber" *ngFor="let emp of employees">
+        {{emp.empName}} - {{emp.empEmail}}
+      </option> -->
+      @for(emp of employees; track emp){
+      <option [value]="emp.empNumber">
+        {{emp.empName}} - {{emp.empEmail}}
+      </option>
+      }
+    </select>
+  </div>
+</div>
+
+</div>

@@ -1,0 +1,184 @@
+<div class="min-h-screen bg-gray-950 text-white">
+
+  <app-header></app-header>
+
+  <div class="profile-page" *ngIf="user">
+
+    <div class="profile-banner">
+      <div class="banner-bg"></div>
+      <div class="banner-content">
+
+        <div class="avatar">
+          <span class="avatar-initials">{{ getInitials() }}</span>
+        </div>
+
+        <div class="user-info">
+          <h1 class="user-name">{{ user.firstName }} {{ user.lastName }}</h1>
+          <p class="user-email">{{ user.email }}</p>
+          <p class="user-joined">Member since {{ user.joinDate }}</p>
+        </div>
+
+        <button class="logout-btn" (click)="logout()">
+          Sign Out
+        </button>
+
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div>
+          <span class="stat-value">{{ totalTrips }}</span>
+          <span class="stat-label">Total Trips</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <span class="stat-value">GHS {{ totalSpent }}</span>
+          <span class="stat-label">Total Spent</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <span class="stat-value">Gold</span>
+          <span class="stat-label">Member Tier</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab"
+              [class.tab-active]="activeTab === 'overview'"
+              (click)="setTab('overview')">
+        Overview
+      </button>
+      <button class="tab"
+              [class.tab-active]="activeTab === 'bookings'"
+              (click)="setTab('bookings')">
+        Bookings
+      </button>
+      <button class="tab"
+              [class.tab-active]="activeTab === 'settings'"
+              (click)="setTab('settings')">
+        Settings
+      </button>
+    </div>
+
+    <div class="tab-content" *ngIf="activeTab === 'overview'">
+
+      <div class="content-grid">
+
+        <div class="content-card">
+          <h3 class="card-title">Recent Bookings</h3>
+
+          <div *ngIf="user.bookings.length === 0" class="empty-state">
+            <p>No bookings yet. Book your first trip!</p>
+          </div>
+
+          <div *ngFor="let booking of user.bookings" class="booking-item">
+            <div class="booking-header">
+              <span class="booking-route">{{ booking.route }}</span>
+              <span class="booking-status" [ngClass]="getStatusColor(booking.status)">
+                {{ booking.status }}
+              </span>
+            </div>
+            <div class="booking-details">
+              <span>Date: {{ booking.date }}</span>
+              <span> Seats: {{ booking.seats.join(', ') }}</span>
+              <span>Code: {{ booking.ref }}</span>
+            </div>
+            <div class="booking-amount">GHS {{ booking.amount }}</div>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <h3 class="card-title">Quick Actions</h3>
+
+          <div class="actions-grid">
+            <a href="/trips" class="action-btn">
+              <span>Book a Trip</span>
+            </a>
+            <a href="/trips" class="action-btn">
+              <span>Search Routes</span>
+            </a>
+            <a href="/contact" class="action-btn">
+              <span>Contact Support</span>
+            </a>
+            <a href="/about" class="action-btn">
+              <span>About GoTransit</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="tab-content" *ngIf="activeTab === 'bookings'">
+      <div class="content-card full-width">
+        <h3 class="card-title">All Bookings</h3>
+
+        <div *ngIf="user.bookings.length === 0" class="empty-state">
+          <span class="empty-icon">📭</span>
+          <p>No bookings yet.</p>
+        </div>
+
+        <div class="bookings-table" *ngIf="user.bookings.length > 0">
+          <div class="table-header">
+            <span>Reference</span>
+            <span>Route</span>
+            <span>Date</span>
+            <span>Seats</span>
+            <span>Amount</span>
+            <span>Status</span>
+          </div>
+          <div *ngFor="let booking of user.bookings" class="table-row">
+            <span class="ref-code">{{ booking.ref }}</span>
+            <span>{{ booking.route }}</span>
+            <span>{{ booking.date }}</span>
+            <span>{{ booking.seats.join(', ') }}</span>
+            <span class="amount-cell">GHS {{ booking.amount }}</span>
+            <span [ngClass]="getStatusColor(booking.status)" class="booking-status">
+              {{ booking.status }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" *ngIf="activeTab === 'settings'">
+      <div class="content-card full-width">
+        <h3 class="card-title">Account Settings</h3>
+
+        <div class="settings-section">
+          <div class="setting-item">
+            <div>
+              <p class="setting-label">Email</p>
+              <p class="setting-value">{{ user.email }}</p>
+            </div>
+          </div>
+          <div class="setting-item">
+            <div>
+              <p class="setting-label">Phone Number</p>
+              <p class="setting-value">{{ user.phone || 'Not set' }}</p>
+            </div>
+          </div>
+          <div class="setting-item">
+            <div>
+              <p class="setting-label">Password</p>
+              <p class="setting-value">••••••••</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="danger-zone">
+          <h4 class="danger-title">Danger Zone</h4>
+          <p class="danger-desc">Once you delete your account, there is no going back.</p>
+          <button class="delete-btn">Delete Account</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

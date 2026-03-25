@@ -1,0 +1,31 @@
+<div class="row text-center m-3">
+  <div class="col-12 mt-20">
+    <button class="btn btn-success m-1" (click)="set(1)">1st Grade</button>
+    <button class="btn btn-danger m-1" (click)="set(2)">2nd Grade</button>
+    <button class="btn btn-warning m-1" (click)="set(3)">3rd Grade</button>
+  </div>
+
+  <!-- <div [ngSwitch]="grade">
+    <div *ngSwitchCase="1">You are in 1st Grade</div>
+    <div *ngSwitchCase="2">You are in 2nd Grade</div>
+    <div *ngSwitchCase="3">You are in 3rd Grade</div>
+    <div *ngSwitchDefault>You are not in any grade</div>
+  </div> -->
+
+  <div>
+    @switch (grade) {
+      @case (1) {
+        <div>You are in 1st Grade</div>
+      }
+      @case (2) {
+        <div>You are in 2nd Grade</div>
+      }
+      @case (3) {
+        <div>You are in 3rd Grade</div>
+      }
+      @default {
+        <div>You are not in any grade</div>
+      }
+    }
+  </div>
+</div>

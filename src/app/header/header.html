@@ -1,0 +1,88 @@
+<header class="navbar">
+  <div class="nav-inner">
+
+    <a routerLink="/" class="nav-logo">
+      <span class="logo-text">GoTransit</span>
+    </a>
+
+    <nav class="nav-links">
+      <a routerLink="/" class="nav-link">Home</a>
+      <a routerLink="/about" class="nav-link">About</a>
+      <a routerLink="/trips" class="nav-link">Trips</a>
+      <a routerLink="/contact" class="nav-link">Contact</a>
+    </nav>
+
+    <div class="nav-right">
+
+      <a *ngIf="!isLoggedIn" routerLink="/Login" class="signin-btn">
+        Sign In
+      </a>
+
+      <div *ngIf="isLoggedIn" class="profile-menu">
+
+        <button class="avatar-btn" (click)="toggleDropdown()">
+          <span class="avatar-circle">{{ getInitials() }}</span>
+          <span class="avatar-chevron" [class.chevron-open]="dropdownOpen">▾</span>
+        </button>
+
+        <div class="dropdown" *ngIf="dropdownOpen">
+          <div class="dropdown-header">
+            <span class="dropdown-name">{{ user.firstName }} {{ user.lastName }}</span>
+            <span class="dropdown-email">{{ user.email }}</span>
+          </div>
+
+          <div class="dropdown-divider"></div>
+
+          <button class="dropdown-item" (click)="goToProfile()">
+            <span class="dropdown-icon"></span>
+            My Profile
+          </button>
+
+          <button class="dropdown-item" (click)="goToBookings()">
+            <span class="dropdown-icon"></span>
+            My Bookings
+          </button>
+
+          <div class="dropdown-divider"></div>
+
+          <button class="dropdown-item dropdown-item-danger" (click)="logout()">
+            <span class="dropdown-icon"></span>
+            Sign Out
+          </button>
+        </div>
+
+        <div class="dropdown-backdrop" *ngIf="dropdownOpen" (click)="closeDropdown()"></div>
+
+      </div>
+
+      <button class="mobile-toggle" (click)="toggleMobileMenu()">
+        <span class="hamburger" [class.hamburger-open]="mobileMenuOpen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="mobile-menu" *ngIf="mobileMenuOpen">
+    <a routerLink="/" class="mobile-link" (click)="mobileMenuOpen = false">Home</a>
+    <a routerLink="/about" class="mobile-link" (click)="mobileMenuOpen = false">About</a>
+    <a routerLink="/trips" class="mobile-link" (click)="mobileMenuOpen = false">Trips</a>
+    <a routerLink="/contact" class="mobile-link" (click)="mobileMenuOpen = false">Contact</a>
+
+    <div class="mobile-divider"></div>
+
+    <a *ngIf="!isLoggedIn" routerLink="/Login" class="mobile-link mobile-signin" (click)="mobileMenuOpen = false">
+      Sign In
+    </a>
+
+    <div *ngIf="isLoggedIn">
+      <a class="mobile-link" (click)="goToProfile(); mobileMenuOpen = false">My Profile</a>
+      <a class="mobile-link mobile-logout" (click)="logout(); mobileMenuOpen = false">Sign Out</a>
+    </div>
+  </div>
+
+</header>

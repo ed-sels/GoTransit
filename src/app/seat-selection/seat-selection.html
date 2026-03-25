@@ -1,0 +1,155 @@
+<div class="min-h-screen bg-gray-950 text-white p-6">
+
+  <app-header></app-header>
+
+  <div class="mb-6 bg-black/40 backdrop-blur-md border border-yellow-700 rounded-2xl p-6">
+    <h2 class="text-2xl font-bold text-yellow-400">
+      {{ trip.from }} → {{ trip.to }}
+    </h2>
+    <p class="text-gray-400 mt-1">
+      Date: {{ trip.date }} | Departure: {{ trip.departureTime }} | Arrival: {{ trip.arrivalTime }}
+    </p>
+    <p class="text-gray-400 mt-1">Price per seat: GHS {{ trip.price }}</p>
+  </div>
+
+  <div class="mb-6">
+    <h3 class="text-lg font-bold text-yellow-400 mb-4">Select Your Seats</h3>
+
+    <div class="bus-container">
+      <div class="bus-body">
+        <div class="driver-area">
+          <span class="driver-label">Driver</span>
+        </div>
+
+        <div class="door-indicator">
+          <span>DOOR</span>
+        </div>
+
+        <div class="seat-grid">
+          <div class="seat-row" *ngFor="let row of seatRows; let i = index">
+
+            <button class="seat"
+                    [disabled]="row[0].booked"
+                    (click)="toggleSeat(row[0])"
+                    [ngClass]="{
+                      'seat-selected': row[0].selected,
+                      'seat-booked': row[0].booked,
+                      'seat-available': !row[0].selected && !row[0].booked
+                    }">
+              {{ row[0].number }}
+            </button>
+
+            <button class="seat"
+                    [disabled]="row[1].booked"
+                    (click)="toggleSeat(row[1])"
+                    [ngClass]="{
+                      'seat-selected': row[1].selected,
+                      'seat-booked': row[1].booked,
+                      'seat-available': !row[1].selected && !row[1].booked
+                    }">
+              {{ row[1].number }}
+            </button>
+
+            <div class="aisle">
+              <span class="row-number">{{ i + 1 }}</span>
+            </div>
+
+            <button class="seat"
+                    [disabled]="row[2].booked"
+                    (click)="toggleSeat(row[2])"
+                    [ngClass]="{
+                      'seat-selected': row[2].selected,
+                      'seat-booked': row[2].booked,
+                      'seat-available': !row[2].selected && !row[2].booked
+                    }">
+              {{ row[2].number }}
+            </button>
+
+            <button class="seat"
+                    [disabled]="row[3].booked"
+                    (click)="toggleSeat(row[3])"
+                    [ngClass]="{
+                      'seat-selected': row[3].selected,
+                      'seat-booked': row[3].booked,
+                      'seat-available': !row[3].selected && !row[3].booked
+                    }">
+              {{ row[3].number }}
+            </button>
+
+          </div>
+
+          <div class="back-row">
+            <button *ngFor="let seat of backRow"
+                    class="seat"
+                    [disabled]="seat.booked"
+                    (click)="toggleSeat(seat)"
+                    [ngClass]="{
+                      'seat-selected': seat.selected,
+                      'seat-booked': seat.booked,
+                      'seat-available': !seat.selected && !seat.booked
+                    }">
+              {{ seat.number }}
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="flex gap-6 mt-6 justify-center flex-wrap">
+      <div class="flex items-center gap-2">
+        <div class="w-5 h-5 rounded bg-yellow-500"></div>
+        <span class="text-gray-400 text-sm">Available</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-5 h-5 rounded bg-green-500"></div>
+        <span class="text-gray-400 text-sm">Selected</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-5 h-5 rounded bg-gray-700"></div>
+        <span class="text-gray-400 text-sm">Booked</span>
+      </div>
+    </div>
+
+    <p class="text-gray-400 mt-4 text-center">
+      Selected Seats:
+      <span class="text-yellow-400 font-bold">
+        {{ selectedSeats.join(', ') || 'None' }}
+      </span>
+    </p>
+
+  </div>
+
+  <div class="mb-6">
+    <label class="block text-gray-400 mb-2 font-medium">Select Pickup Point</label>
+
+    <select [(ngModel)]="pickupPoint"
+            class="w-1xl bg-black/60 border border-yellow-700 rounded-lg p-3 focus:ring-2 focus:ring-yellow-500 outline-none">
+
+      <option value="" disabled>Select your pickup point</option>
+
+      <option *ngFor="let point of pickupPoints" [value]="point">
+        {{ point }}
+      </option>
+
+    </select>
+  </div>
+
+  <div class="flex justify-between items-center mt-6">
+
+    <span class="text-xl font-bold text-yellow-400">
+      Total: GHS {{ selectedSeats.length * trip.price }}
+    </span>
+
+    <button (click)="confirmBooking()"
+            [disabled]="!pickupPoint || selectedSeats.length === 0"
+            class="bg-yellow-500 hover:bg-yellow-400 disabled:bg-gray-600 disabled:cursor-not-allowed text-black px-6 py-3 rounded-xl font-medium transition">
+
+      Confirm Booking
+
+    </button>
+
+  </div>
+
+</div>

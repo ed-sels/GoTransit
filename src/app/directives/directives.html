@@ -1,0 +1,18 @@
+<div class="col-4">
+<div>
+  <input type="text" name="" class="m-1 border-2 rounded-lg border-b-cyan-900" [(ngModel)]="input1">
+  <input type="text" name="" class="m-1 border-2 rounded-lg border-b-cyan-900" [(ngModel)]="input2">
+</div>
+<!-- <div *ngIf="input1 !== input2">
+  <h4>Both values are not equal</h4>
+</div>
+<div *ngIf="input1 === input2">
+  <h4>Both values are equal</h4> -->
+
+  @if (input1 == input2) {
+  <h4>Both values are equal</h4>
+  }
+  @else {
+  <h4>Both values are not equal</h4>
+  }
+</div>

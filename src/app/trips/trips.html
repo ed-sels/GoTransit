@@ -1,0 +1,115 @@
+<div class="min-h-screen bg-gray-950 text-white p-6">
+
+  <app-header></app-header>
+
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-yellow-400">Available Trips</h1>
+    <p class="text-gray-400">Search and book your journey</p>
+  </div>
+
+  <div class="bg-black/40 backdrop-blur-md border border-yellow-700 rounded-2xl p-6 mb-8">
+    <div class="grid md:grid-cols-4 gap-4">
+
+      <input type="text"
+        [(ngModel)]="search.from"
+        placeholder="From"
+        class="bg-black/60 border border-yellow-700 rounded-lg p-3 outline-none focus:ring-2 focus:ring-yellow-500">
+
+      <input type="text"
+        [(ngModel)]="search.to"
+        placeholder="To"
+        class="bg-black/60 border border-yellow-700 rounded-lg p-3 outline-none focus:ring-2 focus:ring-yellow-500">
+
+      <input type="date"
+        [(ngModel)]="search.date"
+        class="bg-black/60 border border-yellow-700 rounded-lg p-3 outline-none focus:ring-2 focus:ring-yellow-500">
+
+      <button
+        (click)="filterTrips()"
+        class="bg-yellow-500 hover:bg-yellow-400 text-black rounded-lg font-medium transition">
+        Search
+      </button>
+
+      <button
+        *ngIf="search.from || search.to || search.date"
+        (click)="resetSearch()"
+        class="bg-green-500 hover:bg-green-800 text-white rounded-lg font-medium transition w-40 h-10">
+        Reset Search
+      </button>
+
+    </div>
+  </div>
+
+
+  <div *ngIf="filteredTrips.length === 0" class="text-center text-gray-400">
+    No trips found.
+  </div>
+
+
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+    <div *ngFor="let trip of filteredTrips"
+      class="bg-black/40 backdrop-blur-md border border-yellow-700 rounded-2xl p-6 shadow-xl hover:scale-105 transition">
+
+
+      <div class="flex justify-between items-center mb-3">
+        <h2 class="text-lg font-bold text-yellow-400">
+          {{ trip.from }} → {{ trip.to }}
+        </h2>
+        <span class="text-sm text-gray-400">
+          {{ trip.date }}
+        </span>
+      </div>
+
+      <div class="flex justify-between text-sm text-gray-300 mb-3">
+        <div>
+          <p class="text-gray-500">Departure</p>
+          <p class="font-semibold">{{ trip.departureTime }}</p>
+        </div>
+
+        <div>
+          <p class="text-gray-500">Arrival</p>
+          <p class="font-semibold">{{ trip.arrivalTime }}</p>
+        </div>
+      </div>
+
+      <div class="mb-3 text-sm">
+        <p class="text-gray-400">
+          Remaining Seats:
+          <span class="font-bold"
+                [ngClass]="{
+                  'text-green-400': trip.seats > 5,
+                  'text-red-400': trip.seats <= 5
+                }">
+            {{ trip.seats }}
+          </span>
+        </p>
+
+        <span *ngIf="trip.seats > 0 && trip.seats <= 5"
+          class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+          Few Seats Left
+        </span>
+
+        <span *ngIf="trip.seats === 0"
+          class="bg-gray-600 text-white text-xs px-2 py-1 rounded-full">
+          Fully Booked
+        </span>
+      </div>
+
+      <div class="flex justify-between items-center mt-4">
+        <span class="text-xl font-bold text-yellow-400">
+          GHS {{ trip.price }}
+        </span>
+
+        <button
+          (click)="bookTrip(trip)"
+          class="bg-yellow-500 text-black px-4 py-2 rounded-xl">
+          Book Now
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,223 @@
+<div class="min-h-screen bg-gray-950 text-white p-6">
+
+  <app-header></app-header>
+
+  <div *ngIf="bookingComplete" class="success-container">
+    <div class="success-card">
+      <div class="success-icon">✅</div>
+      <h2 class="text-2xl font-bold text-green-400 mt-4">Booking Confirmed!</h2>
+      <p class="text-gray-400 mt-2">Your booking has been successfully placed.</p>
+
+      <div class="ref-badge">
+        <span class="text-gray-400 text-sm">Booking Reference</span>
+        <span class="text-yellow-400 text-2xl font-bold">{{ bookingRef }}</span>
+      </div>
+
+      <div class="success-details">
+        <p><span class="text-gray-500">Route:</span> {{ trip.from }} → {{ trip.to }}</p>
+        <p><span class="text-gray-500">Date:</span> {{ trip.date }}</p>
+        <p><span class="text-gray-500">Seats:</span> {{ selectedSeats.join(', ') }}</p>
+        <p><span class="text-gray-500">Amount Paid:</span> <span class="text-yellow-400 font-bold">GHS {{ totalPrice }}</span></p>
+      </div>
+
+      <div class="flex gap-4 mt-6">
+        <button (click)="goHome()"
+                class="flex-1 bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-xl font-medium transition">
+          Go Home
+        </button>
+        <button (click)="bookAnother()"
+                class="flex-1 bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-3 rounded-xl font-medium transition">
+          Book Another Trip
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!bookingComplete">
+
+    <div class="mb-6">
+      <h1 class="text-3xl font-bold text-yellow-400">Confirm Your Booking</h1>
+      <p class="text-gray-400">Review your trip details and complete payment</p>
+    </div>
+
+    <div class="booking-grid">
+
+      <div class="summary-card">
+        <h3 class="section-title">Trip Summary</h3>
+
+        <div class="info-row">
+          <span class="info-label">Route</span>
+          <span class="info-value text-yellow-400">{{ trip.from }} → {{ trip.to }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Date</span>
+          <span class="info-value">{{ trip.date }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Departure</span>
+          <span class="info-value">{{ trip.departureTime }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Arrival</span>
+          <span class="info-value">{{ trip.arrivalTime }}</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="info-row">
+          <span class="info-label">Selected Seats</span>
+          <span class="info-value">
+            <span *ngFor="let seat of selectedSeats; let last = last"
+                  class="seat-badge">{{ seat }}</span>
+          </span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Pickup Point</span>
+          <span class="info-value">{{ passenger?.pickupPoint || 'Not selected' }}</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="info-row">
+          <span class="info-label">Price per Seat</span>
+          <span class="info-value">GHS {{ trip.price }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Number of Seats</span>
+          <span class="info-value">{{ selectedSeats.length }}</span>
+        </div>
+
+        <div class="total-row">
+          <span class="text-lg font-bold text-white">Total</span>
+          <span class="text-2xl font-bold text-yellow-400">GHS {{ totalPrice }}</span>
+        </div>
+      </div>
+
+      <div class="payment-card">
+        <h3 class="section-title">Payment Method</h3>
+
+        <div class="payment-options">
+
+          <label class="payment-option"
+                 [class.payment-option-active]="paymentMethod === 'momo'">
+            <input type="radio" name="payment" value="momo"
+                   [(ngModel)]="paymentMethod" class="hidden">
+            <div>
+              <p class="font-bold">Mobile Money</p>
+              <p class="text-xs text-gray-500">MTN, Telecel, AirtelTigo</p>
+            </div>
+          </label>
+
+          <label class="payment-option"
+                 [class.payment-option-active]="paymentMethod === 'card'">
+            <input type="radio" name="payment" value="card"
+                   [(ngModel)]="paymentMethod" class="hidden">
+            <div>
+              <p class="font-bold">Debit/Credit Card</p>
+              <p class="text-xs text-gray-500">Visa, Mastercard</p>
+            </div>
+          </label>
+
+          <label class="payment-option"
+                 [class.payment-option-active]="paymentMethod === 'cash'">
+            <input type="radio" name="payment" value="cash"
+                   [(ngModel)]="paymentMethod" class="hidden">
+            <div>
+              <p class="font-bold">Pay at Terminal</p>
+              <p class="text-xs text-gray-500">Cash payment on departure</p>
+            </div>
+          </label>
+
+        </div>
+
+        <div *ngIf="paymentMethod === 'momo'" class="payment-form">
+          <div class="form-group">
+            <label class="form-label">Network Provider</label>
+            <select [(ngModel)]="momoProvider"
+                    class="form-input">
+              <option value="" disabled>Select provider</option>
+              <option value="mtn">MTN Mobile Money</option>
+              <option value="telecel">Telecel Cash</option>
+              <option value="airteltigo">AirtelTigo Money</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" [(ngModel)]="momoNumber"
+                   placeholder="0XX XXX XXXX"
+                   maxlength="10"
+                   class="form-input">
+          </div>
+          <p class="text-xs text-gray-500 mt-2">
+            You will receive a prompt on your phone to authorize the payment of
+            <span class="text-yellow-400 font-bold">GHS {{ totalPrice }}</span>.
+          </p>
+        </div>
+
+        <div *ngIf="paymentMethod === 'card'" class="payment-form">
+          <div class="form-group">
+            <label class="form-label">Card Number</label>
+            <input type="text" [(ngModel)]="cardNumber"
+                   placeholder="1234 5678 9012 3456"
+                   maxlength="16"
+                   class="form-input">
+          </div>
+          <div class="card-row">
+            <div class="form-group">
+              <label class="form-label">Expiry</label>
+              <input type="text" [(ngModel)]="cardExpiry"
+                     placeholder="MM/YY"
+                     maxlength="5"
+                     class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">CVV</label>
+              <input type="text" [(ngModel)]="cardCvv"
+                     placeholder="123"
+                     maxlength="3"
+                     class="form-input">
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="paymentMethod === 'cash'" class="payment-form">
+          <div class="cash-notice">
+            <div>
+              <p class="font-bold text-yellow-400">Pay at the Terminal</p>
+              <p class="text-sm text-gray-400 mt-1">
+                Present your booking reference at the terminal counter and pay
+                <span class="text-yellow-400 font-bold">GHS {{ totalPrice }}</span>
+                before departure.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <button (click)="confirmPayment()"
+                [disabled]="!isPaymentValid || isProcessing"
+                class="confirm-btn"
+                [class.confirm-btn-loading]="isProcessing">
+
+          <span *ngIf="!isProcessing">
+            Confirm & Pay GHS {{ totalPrice }}
+          </span>
+
+          <span *ngIf="isProcessing" class="flex items-center justify-center gap-2">
+            <span class="spinner"></span>
+            Processing...
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
