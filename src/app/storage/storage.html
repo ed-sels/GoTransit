@@ -1,0 +1,32 @@
+<div class="container text-center">
+  <div class="row m-4">
+
+    <div class="col-3">
+    <button class="btn btn-info" (click)="setSession()">
+      Set Session
+    </button>
+    </div>
+
+    <div class="col-3">
+    <button class="btn btn-primary" (click)="getSession()">
+      Get Session
+    </button>
+    </div>
+
+    <div class="col-3">
+    <button class="btn btn-danger" (click)="removeSession()">
+      Remove Session
+    </button>
+    </div>
+
+    <div class="col-3">
+    <button class="btn btn-warning" (click)="clearSession()">
+      Clear Session
+    </button>
+    </div>
+
+    @if (sessionValue) {
+      <h6>Session Value : {{sessionValue}}</h6>
+    }
+  </div>
+</div>

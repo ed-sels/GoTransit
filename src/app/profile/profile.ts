@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Header } from '../header/header';
 import { AuthService } from '../auth.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, Header],
+  imports: [CommonModule, Header, FormsModule],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
@@ -15,6 +16,8 @@ export class Profile implements OnInit {
 
   user: any = null;
   activeTab = 'overview';
+  isEditing = false;
+  editUser: any = {};
 
   constructor(
     private authService: AuthService,
@@ -58,6 +61,26 @@ export class Profile implements OnInit {
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['/Login']);
+  }
+
+  startEdit() {
+    this.isEditing = true;
+    this.editUser = { ...this.user };
+  }
+
+  cancelEdit() {
+    this.isEditing = false;
+  }
+
+  saveProfile() {
+    this.authService.updateUser(this.editUser);
+    this.isEditing = false;
+    this.user = this.authService.getUser();
+  }
+
+  deleteAccount() {
+    this.authService.deleteUser();
     this.router.navigate(['/Login']);
   }
 }

@@ -1,0 +1,131 @@
+<div class="min-h-screen bg-gray-950 text-white p-6">
+
+  <app-header></app-header>
+
+  <div *ngIf="trip" class="trip-info-wrapper">
+
+    <div class="page-header">
+      <h1 class="text-3xl font-bold text-yellow-400">Trip Information</h1>
+      <p class="text-gray-400 mt-1">Review trip details before selecting your seats</p>
+    </div>
+
+    <div class="info-card">
+
+      <div class="route-banner">
+        <div class="route-from">
+          <span class="route-city">{{ trip.from }}</span>
+          <span class="route-label">Departure</span>
+        </div>
+        <div class="route-arrow">
+          <div class="arrow-line"></div>
+          <span class="arrow-duration" *ngIf="travelDuration">{{ travelDuration }}</span>
+        </div>
+        <div class="route-to">
+          <span class="route-city">{{ trip.to }}</span>
+          <span class="route-label">Arrival</span>
+        </div>
+      </div>
+
+      <div class="details-grid">
+
+        <div class="detail-item">
+          <div class="detail-icon"> </div>
+          <div>
+            <span class="detail-label">Travel Date</span>
+            <span class="detail-value">{{ formattedDate }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon"> </div>
+          <div>
+            <span class="detail-label">Departure Time</span>
+            <span class="detail-value">{{ trip.departureTime }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon"> </div>
+          <div>
+            <span class="detail-label">Arrival Time</span>
+            <span class="detail-value">{{ trip.arrivalTime }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon"> </div>
+          <div>
+            <span class="detail-label">Available Seats</span>
+            <span class="detail-value"
+                  [ngClass]="{
+                    'text-green-400': trip.seats > 5,
+                    'text-red-400': trip.seats <= 5
+                  }">
+              {{ trip.seats }}
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="route-timeline-section">
+        <h3 class="timeline-title">Route & Pickup Points</h3>
+        <p class="timeline-hint">Click a pickup point to board from there at a different price</p>
+        <div class="timeline-container">
+
+          <div class="timeline-stop timeline-origin"
+               [class.stop-selected]="selectedPickup === trip.from"
+               (click)="selectOrigin()">
+            <div class="stop-dot origin-dot"></div>
+            <div class="stop-connector"></div>
+            <span class="stop-name">{{ trip.from }}</span>
+            <span class="stop-price">GHS {{ trip.price }}</span>
+            <span class="stop-tag">Start</span>
+          </div>
+
+          <div *ngFor="let point of trip.pickupPoints; let last = last"
+               class="timeline-stop timeline-pickup"
+               [class.stop-selected]="selectedPickup === point.name"
+               (click)="selectPickup(point.name, point.price)">
+            <div class="stop-dot pickup-dot"></div>
+            <div class="stop-connector"></div>
+            <span class="stop-name">{{ point.name }}</span>
+            <span class="stop-price">GHS {{ point.price }}</span>
+            <span class="stop-tag">Pickup</span>
+          </div>
+
+          <div class="timeline-stop timeline-destination">
+            <div class="stop-dot destination-dot"></div>
+            <span class="stop-name">{{ trip.to }}</span>
+            <span class="stop-tag">End</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="price-section">
+        <div>
+          <span class="price-label">Price per Seat</span>
+          <span class="price-from" *ngIf="selectedPickup !== trip.from">from {{ selectedPickup }}</span>
+        </div>
+        <span class="price-value">GHS {{ currentPrice }}</span>
+      </div>
+
+    </div>
+
+    <div class="action-buttons">
+      <button (click)="goBack()"
+              class="btn-secondary">
+        ← Back to Trips
+      </button>
+
+      <button (click)="continueToSeats()"
+              [disabled]="trip.seats === 0"
+              class="btn-primary">
+        Continue to Seat Selection →
+      </button>
+    </div>
+
+  </div>
+
+</div>

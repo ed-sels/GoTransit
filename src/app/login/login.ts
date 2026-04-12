@@ -37,7 +37,6 @@ export class Login {
     this.isLoading = true;
     this.errorMessage = '';
 
-    // Simulate API delay
     setTimeout(() => {
       const success = this.authService.login(this.loginObj.email, this.loginObj.password);
 

@@ -16,6 +16,7 @@
       <div class="success-details">
         <p><span class="text-gray-500">Route:</span> {{ trip.from }} → {{ trip.to }}</p>
         <p><span class="text-gray-500">Date:</span> {{ trip.date }}</p>
+        <p *ngIf="passenger?.pickupPoint"><span class="text-gray-500">Pickup Point:</span> {{ passenger.pickupPoint }}</p>
         <p><span class="text-gray-500">Seats:</span> {{ selectedSeats.join(', ') }}</p>
         <p><span class="text-gray-500">Amount Paid:</span> <span class="text-yellow-400 font-bold">GHS {{ totalPrice }}</span></p>
       </div>
@@ -75,16 +76,18 @@
           </span>
         </div>
 
-        <div class="info-row">
+        <div class="divider"></div>
+
+        <div class="info-row" *ngIf="passenger?.pickupPoint">
           <span class="info-label">Pickup Point</span>
-          <span class="info-value">{{ passenger?.pickupPoint || 'Not selected' }}</span>
+          <span class="info-value text-yellow-400">{{ passenger.pickupPoint }}</span>
         </div>
 
         <div class="divider"></div>
 
         <div class="info-row">
           <span class="info-label">Price per Seat</span>
-          <span class="info-value">GHS {{ trip.price }}</span>
+          <span class="info-value">GHS {{ passenger?.price || trip.price }}</span>
         </div>
 
         <div class="info-row">

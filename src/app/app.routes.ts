@@ -12,6 +12,8 @@ import { Contact } from './contact/contact';
 import { SeatSelection } from './seat-selection/seat-selection';
 import { Profile } from './profile/profile';
 import { BookingConfirmation } from './booking-confirmation/booking-confirmation';
+import { TripInformation } from './trip-information/trip-information';
+import { Storage } from './storage/storage';
 
 export const routes: Routes = [
   {path: '', component: Home},
@@ -25,6 +27,8 @@ export const routes: Routes = [
   {path: 'about', component: About},
   {path: 'contact', component: Contact},
   {path: 'seat-selection', component: SeatSelection},
+  {path: 'trip-information', component: TripInformation},
   {path: 'profile', component: Profile},
-  {path: 'booking-confirmation', component: BookingConfirmation}
+  {path: 'booking-confirmation', component: BookingConfirmation},
+  {path: 'storage', component: Storage}
 ];

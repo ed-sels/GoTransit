@@ -43,7 +43,8 @@ export class BookingConfirmation {
   }
 
   get totalPrice(): number {
-    return this.selectedSeats.length * (this.trip?.price || 0);
+    const price = this.passenger?.price || this.trip?.price || 0;
+    return this.selectedSeats.length * price;
   }
 
   get isPaymentValid(): boolean {
