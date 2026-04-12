@@ -15,19 +15,13 @@ import { TripService } from '../trip.service';
 export class SeatSelection {
 
   trip: any;
+  passenger: any;
 
   seats: any[] = [];
   seatRows: any[][] = [];
   backRow: any[] = [];
   selectedSeats: number[] = [];
 
-  pickupPoint = '';
-  pickupPoints = [
-    'Accra Terminal',
-    'Circle',
-    'Kaneshie',
-    'Madina'
-  ];
 
   constructor(
     private tripService: TripService,
@@ -37,6 +31,7 @@ export class SeatSelection {
   ngOnInit() {
 
     this.trip = this.tripService.getTrip();
+    this.passenger = this.tripService.getPassenger();
 
     const bookedSeats = [3, 7, 12, 18, 25, 33];
 
@@ -60,6 +55,10 @@ export class SeatSelection {
 
   }
 
+  get seatPrice(): number {
+    return this.passenger?.price || this.trip?.price || 0;
+  }
+
   toggleSeat(seat: any) {
 
     if (seat.booked) return;
@@ -78,11 +77,6 @@ export class SeatSelection {
   confirmBooking() {
 
     this.tripService.setSeats(this.selectedSeats);
-
-    this.tripService.setPassenger({
-      pickupPoint: this.pickupPoint
-    });
-
     this.router.navigate(['/booking-confirmation']);
 
   }

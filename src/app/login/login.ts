@@ -37,12 +37,15 @@ export class Login {
     this.isLoading = true;
     this.errorMessage = '';
 
-    // Simulate API delay
     setTimeout(() => {
       const success = this.authService.login(this.loginObj.email, this.loginObj.password);
 
       if (success) {
-        this.router.navigate(['/profile']);
+        if (this.authService.isAdmin()) {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/profile']);
+        }
       } else {
         this.errorMessage = 'Invalid email or password.';
       }

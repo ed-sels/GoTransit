@@ -1,4 +1,4 @@
-<header class="navbar">
+<header id="navbar">
   <div class="nav-inner">
 
     <a routerLink="/" class="nav-logo">
@@ -43,6 +43,11 @@
             My Bookings
           </button>
 
+          <button *ngIf="authService.isAdmin()" class="dropdown-item" (click)="goToAdmin()">
+            <span class="dropdown-icon"></span>
+            Admin Panel
+          </button>
+
           <div class="dropdown-divider"></div>
 
           <button class="dropdown-item dropdown-item-danger" (click)="logout()">
@@ -81,6 +86,7 @@
 
     <div *ngIf="isLoggedIn">
       <a class="mobile-link" (click)="goToProfile(); mobileMenuOpen = false">My Profile</a>
+      <a *ngIf="authService.isAdmin()" class="mobile-link" (click)="goToAdmin(); mobileMenuOpen = false" style="color: #eab308; font-weight: 600;">Admin Panel</a>
       <a class="mobile-link mobile-logout" (click)="logout(); mobileMenuOpen = false">Sign Out</a>
     </div>
   </div>

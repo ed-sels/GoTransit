@@ -53,7 +53,7 @@ export class Trips {
 
   bookTrip(trip:any){
     this.tripService.setTrip(trip);
-    this.router.navigate(['/seat-selection']);
+    this.router.navigate(['/trip-information']);
   }
 
 }

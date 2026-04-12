@@ -1,0 +1,131 @@
+<div class="dashboard">
+
+  <div class="page-header">
+    <h1 class="page-title">Dashboard</h1>
+    <p class="page-subtitle">Welcome back. Here's what's happening with GoTransit.</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-users">👥</div>
+      <div class="stat-info">
+        <span class="stat-value">{{ stats.totalUsers || 0 }}</span>
+        <span class="stat-label">Total Users</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-trips">🗺️</div>
+      <div class="stat-info">
+        <span class="stat-value">{{ stats.totalTrips || 0 }}</span>
+        <span class="stat-label">Active Trips</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-bookings">🎫</div>
+      <div class="stat-info">
+        <span class="stat-value">{{ stats.totalBookings || 0 }}</span>
+        <span class="stat-label">Total Bookings</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-revenue">💰</div>
+      <div class="stat-info">
+        <span class="stat-value">GHS {{ stats.totalRevenue || 0 }}</span>
+        <span class="stat-label">Total Revenue</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Secondary Stats -->
+  <div class="secondary-stats">
+    <div class="mini-stat">
+      <span class="mini-dot dot-green"></span>
+      <span class="mini-label">Active</span>
+      <span class="mini-value">{{ stats.activeBookings || 0 }}</span>
+    </div>
+    <div class="mini-stat">
+      <span class="mini-dot dot-blue"></span>
+      <span class="mini-label">Completed</span>
+      <span class="mini-value">{{ stats.completedBookings || 0 }}</span>
+    </div>
+    <div class="mini-stat">
+      <span class="mini-dot dot-red"></span>
+      <span class="mini-label">Cancelled</span>
+      <span class="mini-value">{{ stats.cancelledBookings || 0 }}</span>
+    </div>
+  </div>
+
+  <div class="content-grid">
+
+    <!-- Recent Bookings -->
+    <div class="content-card">
+      <div class="card-header">
+        <h3 class="card-title">Recent Bookings</h3>
+        <a routerLink="/admin/bookings" class="card-link">View All →</a>
+      </div>
+
+      <div *ngIf="recentBookings.length === 0" class="empty-state">
+        <span class="empty-icon">📭</span>
+        <p>No bookings yet.</p>
+      </div>
+
+      <div class="bookings-list" *ngIf="recentBookings.length > 0">
+        <div *ngFor="let booking of recentBookings" class="booking-row">
+          <div class="booking-info">
+            <span class="booking-route">{{ booking.route }}</span>
+            <span class="booking-user">{{ booking.userName }}</span>
+          </div>
+          <div class="booking-meta">
+            <span class="booking-amount">GHS {{ booking.amount }}</span>
+            <span class="booking-status" [ngClass]="getStatusClass(booking.status)">
+              {{ booking.status }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="content-card">
+      <div class="card-header">
+        <h3 class="card-title">Quick Actions</h3>
+      </div>
+
+      <div class="actions-grid">
+        <a routerLink="/admin/trips" class="action-card">
+          <span class="action-icon">➕</span>
+          <span class="action-label">Add Trip</span>
+        </a>
+        <a routerLink="/admin/users" class="action-card">
+          <span class="action-icon">👥</span>
+          <span class="action-label">View Users</span>
+        </a>
+        <a routerLink="/admin/bookings" class="action-card">
+          <span class="action-icon">🎫</span>
+          <span class="action-label">All Bookings</span>
+        </a>
+        <a routerLink="/" class="action-card">
+          <span class="action-icon">🌐</span>
+          <span class="action-label">View Site</span>
+        </a>
+      </div>
+
+      <!-- Top Routes -->
+      <div class="top-routes" *ngIf="topRoutes.length > 0">
+        <h4 class="routes-title">Top Routes</h4>
+        <div *ngFor="let route of topRoutes" class="route-row">
+          <span class="route-name">{{ route.route }}</span>
+          <span class="route-count">{{ route.count }} bookings</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

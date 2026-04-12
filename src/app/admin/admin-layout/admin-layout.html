@@ -1,0 +1,92 @@
+<div class="admin-shell" [class.sidebar-collapsed]="sidebarCollapsed">
+
+  <div class="mobile-header">
+    <button class="mobile-menu-btn" (click)="toggleMobileSidebar()">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+    <span class="mobile-logo">GoTransit <span class="mobile-badge">Admin</span></span>
+  </div>
+
+  <div class="mobile-backdrop" *ngIf="mobileSidebarOpen" (click)="closeMobileSidebar()"></div>
+
+  <aside class="sidebar" [class.mobile-open]="mobileSidebarOpen">
+
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <span class="logo-text" *ngIf="!sidebarCollapsed">GoTransit</span>
+      </div>
+      <span class="admin-badge" *ngIf="!sidebarCollapsed">Admin</span>
+    </div>
+
+    <nav class="sidebar-nav">
+
+      <a routerLink="/admin" routerLinkActive="nav-active" [routerLinkActiveOptions]="{exact: true}"
+         class="nav-item" (click)="closeMobileSidebar()">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label" *ngIf="!sidebarCollapsed">Dashboard</span>
+      </a>
+
+      <a routerLink="/admin/trips" routerLinkActive="nav-active"
+         class="nav-item" (click)="closeMobileSidebar()">
+        <span class="nav-icon">🗺️</span>
+        <span class="nav-label" *ngIf="!sidebarCollapsed">Manage Trips</span>
+      </a>
+
+      <a routerLink="/admin/users" routerLinkActive="nav-active"
+         class="nav-item" (click)="closeMobileSidebar()">
+        <span class="nav-icon">👥</span>
+        <span class="nav-label" *ngIf="!sidebarCollapsed">Users</span>
+      </a>
+
+      <a routerLink="/admin/bookings" routerLinkActive="nav-active"
+         class="nav-item" (click)="closeMobileSidebar()">
+        <span class="nav-icon">🎫</span>
+        <span class="nav-label" *ngIf="!sidebarCollapsed">Bookings</span>
+      </a>
+
+      <div class="nav-divider"></div>
+
+      <a routerLink="/admin/profile" routerLinkActive="nav-active"
+         class="nav-item" (click)="closeMobileSidebar()">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label" *ngIf="!sidebarCollapsed">Profile</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="footer-btn" (click)="goToPublicSite()">
+        <span class="nav-icon">🌐</span>
+        <span class="nav-label" *ngIf="!sidebarCollapsed">View Site</span>
+      </button>
+      <button class="footer-btn logout-btn" (click)="logout()">
+        <span class="nav-icon">🚪</span>
+        <span class="nav-label" *ngIf="!sidebarCollapsed">Sign Out</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+
+    <div class="admin-topbar">
+      <button class="collapse-btn" (click)="toggleSidebar()">
+        <span class="collapse-icon" [class.rotated]="sidebarCollapsed">◀</span>
+      </button>
+      <div class="topbar-right">
+        <div class="admin-avatar" routerLink="/admin/profile">
+          <span class="avatar-text">{{ getInitials() }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </main>
+
+</div>

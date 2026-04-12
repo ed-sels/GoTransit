@@ -16,14 +16,19 @@
       <div class="success-details">
         <p><span class="text-gray-500">Route:</span> {{ trip.from }} → {{ trip.to }}</p>
         <p><span class="text-gray-500">Date:</span> {{ trip.date }}</p>
+        <p *ngIf="passenger?.pickupPoint"><span class="text-gray-500">Pickup Point:</span> {{ passenger.pickupPoint }}</p>
         <p><span class="text-gray-500">Seats:</span> {{ selectedSeats.join(', ') }}</p>
         <p><span class="text-gray-500">Amount Paid:</span> <span class="text-yellow-400 font-bold">GHS {{ totalPrice }}</span></p>
       </div>
 
-      <div class="flex gap-4 mt-6">
+      <div class="flex gap-3 mt-6">
         <button (click)="goHome()"
                 class="flex-1 bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-xl font-medium transition">
           Go Home
+        </button>
+        <button (click)="viewTicket()"
+                class="flex-1 bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-xl font-medium transition">
+          View Ticket
         </button>
         <button (click)="bookAnother()"
                 class="flex-1 bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-3 rounded-xl font-medium transition">
@@ -75,16 +80,18 @@
           </span>
         </div>
 
-        <div class="info-row">
+        <div class="divider"></div>
+
+        <div class="info-row" *ngIf="passenger?.pickupPoint">
           <span class="info-label">Pickup Point</span>
-          <span class="info-value">{{ passenger?.pickupPoint || 'Not selected' }}</span>
+          <span class="info-value text-yellow-400">{{ passenger.pickupPoint }}</span>
         </div>
 
         <div class="divider"></div>
 
         <div class="info-row">
           <span class="info-label">Price per Seat</span>
-          <span class="info-value">GHS {{ trip.price }}</span>
+          <span class="info-value">GHS {{ passenger?.price || trip.price }}</span>
         </div>
 
         <div class="info-row">

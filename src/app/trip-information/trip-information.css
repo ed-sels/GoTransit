@@ -1,0 +1,453 @@
+.trip-info-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+/* Info Card */
+.info-card {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  border: 1px solid #b8860b;
+  border-radius: 1.25rem;
+  padding: 2rem;
+  box-shadow:
+    0 0 40px rgba(184, 134, 11, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Route Banner */
+.route-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(184, 134, 11, 0.15) 0%, rgba(0, 0, 0, 0.3) 100%);
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+}
+
+.route-from,
+.route-to {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.route-city {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #facc15;
+  letter-spacing: -0.02em;
+}
+
+.route-label {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.route-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 1;
+  padding: 0 1.5rem;
+}
+
+.arrow-line {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #b8860b, #facc15, #b8860b);
+  position: relative;
+  border-radius: 1px;
+}
+
+.arrow-line::after {
+  content: '→';
+  position: absolute;
+  right: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #facc15;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.arrow-duration {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(184, 134, 11, 0.3);
+}
+
+/* Details Grid */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(184, 134, 11, 0.15);
+  transition: border-color 0.3s ease, transform 0.2s ease;
+}
+
+.detail-item:hover {
+  border-color: rgba(184, 134, 11, 0.4);
+  transform: translateY(-2px);
+}
+
+.detail-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(184, 134, 11, 0.1);
+  border-radius: 0.5rem;
+}
+
+.detail-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detail-value {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+/* Price Section */
+.price-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgba(184, 134, 11, 0.12) 0%, rgba(0, 0, 0, 0.2) 100%);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(184, 134, 11, 0.3);
+}
+
+.price-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #d1d5db;
+}
+
+.price-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #facc15;
+  letter-spacing: -0.02em;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: 0.875rem 1.5rem;
+  background: rgba(55, 65, 81, 0.6);
+  color: #d1d5db;
+  border: 1px solid rgba(107, 114, 128, 0.4);
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(75, 85, 99, 0.7);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  flex: 1.5;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+  color: #000;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(234, 179, 8, 0.25);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(234, 179, 8, 0.35);
+}
+
+.btn-primary:disabled {
+  background: #374151;
+  color: #6b7280;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Route Timeline */
+.route-timeline-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(184, 134, 11, 0.15);
+}
+
+.timeline-title {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.timeline-container {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+
+.stop-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  z-index: 2;
+  flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.timeline-stop:hover .stop-dot {
+  transform: scale(1.3);
+}
+
+.origin-dot {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 0 14px rgba(34, 197, 94, 0.5);
+}
+
+.pickup-dot {
+  background: linear-gradient(135deg, #facc15, #ca8a04);
+  box-shadow: 0 0 14px rgba(234, 179, 8, 0.4);
+}
+
+.destination-dot {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.5);
+}
+
+.stop-connector {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(184, 134, 11, 0.6), rgba(184, 134, 11, 0.3));
+  z-index: 1;
+}
+
+.stop-name {
+  margin-top: 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  text-align: center;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.stop-tag {
+  margin-top: 0.2rem;
+  font-size: 0.6rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.timeline-origin .stop-tag {
+  color: #4ade80;
+}
+
+.timeline-destination .stop-tag {
+  color: #f87171;
+}
+
+.timeline-pickup .stop-tag {
+  color: #fbbf24;
+}
+
+/* Clickable stops */
+.timeline-stop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  min-width: 90px;
+  flex: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.timeline-stop:hover {
+  transform: translateY(-3px);
+}
+
+.timeline-destination {
+  cursor: default;
+}
+
+.timeline-destination:hover {
+  transform: none;
+}
+
+/* Selected state */
+.stop-selected .stop-dot {
+  transform: scale(1.4);
+  box-shadow: 0 0 20px rgba(234, 179, 8, 0.7);
+}
+
+.stop-selected .stop-name {
+  color: #facc15;
+  font-weight: 700;
+}
+
+.stop-selected::after {
+  content: '✓';
+  position: absolute;
+  top: -8px;
+  right: calc(50% - 8px);
+  font-size: 0.65rem;
+  color: #22c55e;
+  font-weight: bold;
+  background: rgba(34, 197, 94, 0.2);
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+/* Price on stop */
+.stop-price {
+  margin-top: 0.15rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #facc15;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.stop-selected .stop-price {
+  opacity: 1;
+}
+
+/* Hint text */
+.timeline-hint {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 1.25rem;
+  font-style: italic;
+}
+
+/* Price from subtitle */
+.price-from {
+  display: block;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 0.15rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .route-city {
+    font-size: 1.2rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    flex: 1;
+  }
+
+  .timeline-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .timeline-stop {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: unset;
+    width: 100%;
+    padding: 0.4rem 0;
+  }
+
+  .stop-connector {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    width: 3px;
+    height: 100%;
+  }
+
+  .stop-name {
+    margin-top: 0;
+    white-space: normal;
+  }
+
+  .stop-tag {
+    margin-top: 0;
+    margin-left: 0.25rem;
+  }
+}
