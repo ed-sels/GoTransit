@@ -63,4 +63,9 @@ export class Header {
     this.dropdownOpen = false;
     this.router.navigate(['/profile']);
   }
+
+  goToAdmin() {
+    this.dropdownOpen = false;
+    this.router.navigate(['/admin']);
+  }
 }

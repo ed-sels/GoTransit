@@ -1,0 +1,108 @@
+<div class="min-h-screen bg-gray-950 text-white">
+
+  <app-header></app-header>
+
+  <div class="ticket-page" *ngIf="booking">
+
+    <div class="ticket-actions-top no-print">
+      <button class="back-btn" (click)="goBack()">Back to Profile</button>
+      <button class="print-btn" (click)="printTicket()">Print Ticket</button>
+    </div>
+
+    <div class="ticket-container">
+      <div class="ticket">
+
+        <div class="ticket-header">
+          <div class="ticket-brand">
+            <span class="brand-name">GoTransit</span>
+          </div>
+          <div class="ticket-badge" [ngClass]="{
+            'badge-upcoming': booking.status === 'Upcoming',
+            'badge-completed': booking.status === 'Completed',
+            'badge-cancelled': booking.status === 'Cancelled'
+          }">
+            {{ booking.status }}
+          </div>
+        </div>
+
+        <div class="ticket-route-section">
+          <div class="route-point">
+            <span class="route-label">FROM</span>
+            <span class="route-city">{{ booking.route.split(' → ')[0] }}</span>
+          </div>
+          <div class="route-arrow">
+            <div class="route-line"></div>
+          </div>
+          <div class="route-point">
+            <span class="route-label">TO</span>
+            <span class="route-city">{{ booking.route.split(' → ')[1] }}</span>
+          </div>
+        </div>
+
+        <div class="ticket-tear">
+          <div class="tear-circle tear-left"></div>
+          <div class="tear-dots"></div>
+          <div class="tear-circle tear-right"></div>
+        </div>
+
+        <div class="ticket-details">
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="detail-label">Passenger</span>
+              <span class="detail-value">{{ userName }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Date</span>
+              <span class="detail-value">{{ booking.date }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Departure</span>
+              <span class="detail-value">{{ booking.departureTime || 'N/A' }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Arrival</span>
+              <span class="detail-value">{{ booking.arrivalTime || 'N/A' }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Seats</span>
+              <span class="detail-value seats-value">
+                <span *ngFor="let seat of booking.seats" class="seat-chip">{{ seat }}</span>
+              </span>
+            </div>
+            <div class="detail-item" *ngIf="booking.pickupPoint">
+              <span class="detail-label">Pickup Point</span>
+              <span class="detail-value">{{ booking.pickupPoint }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-tear">
+          <div class="tear-circle tear-left"></div>
+          <div class="tear-dots"></div>
+          <div class="tear-circle tear-right"></div>
+        </div>
+
+        <div class="ticket-footer">
+          <div class="ref-section">
+            <span class="ref-label">Booking Reference</span>
+            <span class="ref-code">{{ booking.ref }}</span>
+            <!-- <div class="barcode">
+              <span *ngFor="let bar of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]"
+                    class="bar"
+                    [style.height.px]="20 + (bar * 7 % 15)"
+                    [style.width.px]="bar % 3 === 0 ? 3 : 2">
+              </span>
+            </div> -->
+          </div>
+          <div class="amount-section">
+            <span class="amount-label">Total Amount</span>
+            <span class="amount-value">GHS {{ booking.amount }}</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

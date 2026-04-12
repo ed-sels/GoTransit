@@ -1,0 +1,92 @@
+<div class="admin-bookings">
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Bookings</h1>
+      <p class="page-subtitle">View and manage all customer bookings</p>
+    </div>
+    <div class="revenue-badge">
+      <span class="revenue-label">Revenue</span>
+      <span class="revenue-value">GHS {{ totalRevenue }}</span>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-bar">
+    <div class="filter-tabs">
+      <button class="filter-tab" [class.active]="statusFilter === 'all'" (click)="setFilter('all')">
+        All <span class="filter-count">{{ allBookings.length }}</span>
+      </button>
+      <button class="filter-tab" [class.active]="statusFilter === 'Upcoming'" (click)="setFilter('Upcoming')">
+        Upcoming
+      </button>
+      <button class="filter-tab" [class.active]="statusFilter === 'Completed'" (click)="setFilter('Completed')">
+        Completed
+      </button>
+      <button class="filter-tab" [class.active]="statusFilter === 'Cancelled'" (click)="setFilter('Cancelled')">
+        Cancelled
+      </button>
+    </div>
+
+    <input type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Search by route, name, or ref..."
+      class="search-input">
+  </div>
+
+  <!-- Bookings Table -->
+  <div class="table-wrapper">
+    <div class="table-card">
+
+      <div *ngIf="filteredBookings.length === 0" class="empty-state">
+        <span class="empty-icon">🎫</span>
+        <p>No bookings found.</p>
+      </div>
+
+      <table class="bookings-table" *ngIf="filteredBookings.length > 0">
+        <thead>
+          <tr>
+            <th>Reference</th>
+            <th>Customer</th>
+            <th>Route</th>
+            <th>Date</th>
+            <th>Seats</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let booking of filteredBookings" class="table-row">
+            <td class="ref-cell">{{ booking.ref }}</td>
+            <td>
+              <div class="customer-info">
+                <span class="customer-name">{{ booking.userName }}</span>
+                <span class="customer-email">{{ booking.userEmail }}</span>
+              </div>
+            </td>
+            <td class="route-cell">{{ booking.route }}</td>
+            <td>{{ booking.date }}</td>
+            <td>{{ booking.seats?.join(', ') }}</td>
+            <td class="amount-cell">GHS {{ booking.amount }}</td>
+            <td>
+              <span class="booking-status" [ngClass]="getStatusClass(booking.status)">
+                {{ booking.status }}
+              </span>
+            </td>
+            <td>
+              <button *ngIf="booking.status === 'Upcoming'"
+                      class="cancel-btn"
+                      (click)="cancelBooking(booking)">
+                Cancel
+              </button>
+              <span *ngIf="booking.status !== 'Upcoming'" class="no-action">—</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+</div>

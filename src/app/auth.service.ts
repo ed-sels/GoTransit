@@ -13,41 +13,8 @@ export class AuthService {
   login(email: string, password: string): boolean {
     let user = this.userDataService.getUserByEmail(email);
 
-    if (!user) {
-      user = {
-        firstName: email.split('@')[0],
-        lastName: '',
-        email: email,
-        phone: '',
-        joinDate: new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }),
-        bookings: [
-          {
-            ref: 'BK-A3F7K2',
-            route: 'Accra → Kumasi',
-            date: '2026-03-05',
-            seats: [4, 5],
-            status: 'Completed',
-            amount: 240
-          },
-          {
-            ref: 'BK-M9X1P8',
-            route: 'Accra → Cape Coast',
-            date: '2026-03-12',
-            seats: [10],
-            status: 'Upcoming',
-            amount: 80
-          },
-          {
-            ref: 'BK-H7L2M1',
-            route: 'Accra → Ho',
-            date: '2026-03-12',
-            seats: [10],
-            status: 'Upcoming',
-            amount: 50
-          }
-        ]
-      };
-      this.userDataService.addUser(user);
+    if (!user || user.password !== password) {
+      return false;
     }
     
     this.currentUser = { ...user };
@@ -59,6 +26,7 @@ export class AuthService {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
+      password: data.password,
       phone: '',
       joinDate: new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }),
       bookings: []
@@ -76,6 +44,10 @@ export class AuthService {
     return this.currentUser !== null;
   }
 
+  isAdmin(): boolean {
+    return this.currentUser?.role === 'admin';
+  }
+
   logout() {
     this.currentUser = null;
   }
@@ -91,6 +63,26 @@ export class AuthService {
     if (this.currentUser) {
       Object.assign(this.currentUser, data);
       this.userDataService.updateUser(this.currentUser.email, data);
+    }
+  }
+
+  addBooking(booking: any) {
+    if (this.currentUser) {
+      if (!this.currentUser.bookings) {
+        this.currentUser.bookings = [];
+      }
+      this.currentUser.bookings.push(booking);
+      this.userDataService.updateUser(this.currentUser.email, { bookings: this.currentUser.bookings });
+    }
+  }
+
+  cancelBooking(ref: string) {
+    if (this.currentUser && this.currentUser.bookings) {
+      const booking = this.currentUser.bookings.find((b: any) => b.ref === ref);
+      if (booking) {
+        booking.status = 'Cancelled';
+        this.userDataService.updateUser(this.currentUser.email, { bookings: this.currentUser.bookings });
+      }
     }
   }
 }

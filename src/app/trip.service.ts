@@ -1,11 +1,24 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripService {
 
-  trips = [
+  private readonly STORAGE_KEY = 'app_trips_storage';
+
+  trips: any[] = [];
+
+  selectedTrip: any = null;
+  selectedSeats: number[] = [];
+
+  passenger = {
+    name: '',
+    phone: ''
+  };
+
+  private defaultTrips = [
     {
       id: 1,
       from: 'Accra',
@@ -100,11 +113,11 @@ export class TripService {
         { name: 'Koforidua', price: 160 },
         { name: 'Kumasi', price: 140 },
         { name: 'Sunyani', price: 110 },
-        {name: 'Tamale', price: 70}
+        { name: 'Tamale', price: 70 }
       ]
     },
     {
-      id: 6,
+      id: 7,
       from: 'Wa',
       to: 'Accra',
       date: '2026-03-05',
@@ -113,21 +126,42 @@ export class TripService {
       seats: 20,
       price: 200,
       pickupPoints: [
-        {name: 'Tamale', price: 180},
+        { name: 'Tamale', price: 180 },
         { name: 'Sunyani', price: 160 },
         { name: 'Kumasi', price: 140 },
         { name: 'Koforidua', price: 100 },
-        ]
+      ]
     },
   ];
 
-  selectedTrip: any = null;
-  selectedSeats: number[] = [];
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    this.loadFromStorage();
+  }
 
-  passenger = {
-    name: '',
-    phone: ''
-  };
+  private loadFromStorage() {
+    if (isPlatformBrowser(this.platformId)) {
+      const data = localStorage.getItem(this.STORAGE_KEY);
+      if (data) {
+        this.trips = JSON.parse(data);
+      } else {
+        this.trips = [...this.defaultTrips];
+        this.saveToStorage();
+      }
+    } else {
+      this.trips = [...this.defaultTrips];
+    }
+  }
+
+  private saveToStorage() {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.trips));
+    }
+  }
+
+  private getNextId(): number {
+    if (this.trips.length === 0) return 1;
+    return Math.max(...this.trips.map(t => t.id)) + 1;
+  }
 
   getTrips() {
     return this.trips;
@@ -157,4 +191,29 @@ export class TripService {
     return this.passenger;
   }
 
+  // Admin CRUD methods
+  addTrip(tripData: any) {
+    const trip = {
+      ...tripData,
+      id: this.getNextId()
+    };
+    this.trips.push(trip);
+    this.saveToStorage();
+    return trip;
+  }
+
+  updateTrip(id: number, updatedData: any) {
+    const index = this.trips.findIndex(t => t.id === id);
+    if (index !== -1) {
+      this.trips[index] = { ...this.trips[index], ...updatedData, id };
+      this.saveToStorage();
+      return true;
+    }
+    return false;
+  }
+
+  deleteTrip(id: number) {
+    this.trips = this.trips.filter(t => t.id !== id);
+    this.saveToStorage();
+  }
 }

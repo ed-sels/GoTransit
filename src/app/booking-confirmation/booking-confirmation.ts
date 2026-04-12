@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Header } from '../header/header';
 import { TripService } from '../trip.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-booking-confirmation',
@@ -29,6 +30,7 @@ export class BookingConfirmation {
 
   constructor(
     private tripService: TripService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -72,6 +74,20 @@ export class BookingConfirmation {
       this.isProcessing = false;
       this.bookingComplete = true;
       this.bookingRef = 'BK-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+
+      // Save booking to user data
+      const booking = {
+        ref: this.bookingRef,
+        route: this.trip.from + ' → ' + this.trip.to,
+        date: this.trip.date,
+        departureTime: this.trip.departureTime,
+        arrivalTime: this.trip.arrivalTime,
+        seats: [...this.selectedSeats],
+        amount: this.totalPrice,
+        status: 'Upcoming',
+        pickupPoint: this.passenger?.pickupPoint || ''
+      };
+      this.authService.addBooking(booking);
     }, 2000);
   }
 
@@ -81,5 +97,9 @@ export class BookingConfirmation {
 
   bookAnother() {
     this.router.navigate(['/trips']);
+  }
+
+  viewTicket() {
+    this.router.navigate(['/ticket', this.bookingRef]);
   }
 }

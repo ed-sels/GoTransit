@@ -87,7 +87,13 @@
               <span> Seats: {{ booking.seats.join(', ') }}</span>
               <span>Code: {{ booking.ref }}</span>
             </div>
-            <div class="booking-amount">GHS {{ booking.amount }}</div>
+            <div class="booking-footer">
+              <div class="booking-amount">GHS {{ booking.amount }}</div>
+              <div class="booking-actions">
+                <button class="action-ticket-btn" (click)="viewTicket(booking.ref)" *ngIf="booking.status !== 'Cancelled'">Ticket</button>
+                <button class="action-cancel-btn" (click)="cancelBooking(booking.ref)" *ngIf="booking.status === 'Upcoming'">Cancel</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -119,7 +125,7 @@
         <h3 class="card-title">All Bookings</h3>
 
         <div *ngIf="user.bookings.length === 0" class="empty-state">
-          <span class="empty-icon">📭</span>
+          <span class="empty-icon"></span>
           <p>No bookings yet.</p>
         </div>
 
@@ -131,6 +137,7 @@
             <span>Seats</span>
             <span>Amount</span>
             <span>Status</span>
+            <span>Actions</span>
           </div>
           <div *ngFor="let booking of user.bookings" class="table-row">
             <span class="ref-code">{{ booking.ref }}</span>
@@ -140,6 +147,10 @@
             <span class="amount-cell">GHS {{ booking.amount }}</span>
             <span [ngClass]="getStatusColor(booking.status)" class="booking-status">
               {{ booking.status }}
+            </span>
+            <span class="table-actions">
+              <button class="action-ticket-btn" (click)="viewTicket(booking.ref)" *ngIf="booking.status !== 'Cancelled'">Ticket</button>
+              <button class="action-cancel-btn" (click)="cancelBooking(booking.ref)" *ngIf="booking.status === 'Upcoming'">Cancel Booking</button>
             </span>
           </div>
         </div>

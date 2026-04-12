@@ -83,4 +83,13 @@ export class Profile implements OnInit {
     this.authService.deleteUser();
     this.router.navigate(['/Login']);
   }
+
+  cancelBooking(ref: string) {
+    this.authService.cancelBooking(ref);
+    this.user = this.authService.getUser();
+  }
+
+  viewTicket(ref: string) {
+    this.router.navigate(['/ticket', ref]);
+  }
 }

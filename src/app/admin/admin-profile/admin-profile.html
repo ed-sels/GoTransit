@@ -1,0 +1,115 @@
+<div class="admin-profile" *ngIf="user">
+
+  <div class="page-header">
+    <h1 class="page-title">Admin Profile</h1>
+    <p class="page-subtitle">Manage your admin account</p>
+  </div>
+
+  <div class="profile-card">
+    <div class="profile-banner"></div>
+    <div class="profile-content">
+
+      <div class="profile-top">
+        <div class="profile-avatar">{{ getInitials() }}</div>
+        <div class="profile-info">
+          <h2 class="profile-name">{{ user.firstName }} {{ user.lastName }}</h2>
+          <p class="profile-email">{{ user.email }}</p>
+          <span class="role-badge">Administrator</span>
+        </div>
+        <button *ngIf="!isEditing" class="edit-profile-btn" (click)="startEdit()">Edit Profile</button>
+      </div>
+
+      <div class="profile-details" *ngIf="!isEditing">
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">First Name</span>
+            <span class="detail-value">{{ user.firstName }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Last Name</span>
+            <span class="detail-value">{{ user.lastName }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Email</span>
+            <span class="detail-value">{{ user.email }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Phone</span>
+            <span class="detail-value">{{ user.phone || 'Not set' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Role</span>
+            <span class="detail-value">Admin</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Member Since</span>
+            <span class="detail-value">{{ user.joinDate }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-edit" *ngIf="isEditing">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" [(ngModel)]="editForm.firstName" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" [(ngModel)]="editForm.lastName" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" [(ngModel)]="editForm.email" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input type="tel" [(ngModel)]="editForm.phone" class="form-input">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="save-btn" (click)="saveProfile()">Save Changes</button>
+          <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="security-card">
+    <div class="security-header">
+      <div>
+        <h3 class="security-title">Security</h3>
+        <p class="security-desc">Manage your password</p>
+      </div>
+      <button class="change-pw-btn" (click)="togglePasswordForm()" *ngIf="!showPasswordForm">
+        Change Password
+      </button>
+    </div>
+
+    <div class="password-form" *ngIf="showPasswordForm">
+
+      <div class="pw-alert pw-error" *ngIf="passwordError">{{ passwordError }}</div>
+      <div class="pw-alert pw-success" *ngIf="passwordSuccess">{{ passwordSuccess }}</div>
+
+      <div class="form-group">
+        <label class="form-label">Current Password</label>
+        <input type="password" [(ngModel)]="passwords.current" class="form-input" placeholder="Enter current password">
+      </div>
+      <div class="form-group">
+        <label class="form-label">New Password</label>
+        <input type="password" [(ngModel)]="passwords.newPassword" class="form-input" placeholder="Enter new password">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" [(ngModel)]="passwords.confirm" class="form-input" placeholder="Confirm new password">
+      </div>
+
+      <div class="form-actions">
+        <button class="save-btn" (click)="changePassword()">Update Password</button>
+        <button class="cancel-btn" (click)="togglePasswordForm()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+</div>
