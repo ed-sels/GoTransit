@@ -248,7 +248,16 @@
 }
 
 .success-icon {
-  font-size: 4rem;
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.success-icon svg {
+  width: 100px;
+  height: 100px;
+  color: green;
 }
 
 .ref-badge {

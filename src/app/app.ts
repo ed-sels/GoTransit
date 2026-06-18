@@ -7,20 +7,14 @@ import { Directives } from './directives/directives';
 import { AttributeDirectives } from './attribute-directives/attribute-directives';
 import { Signals } from './signals/signals';
 import { Lsignals } from './lsignals/lsignals';
+import { FlowiseChatbotComponent } from "./chatbot/chatbot";
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    // RouterLink,
-    // RouterLinkActive
-    // Directives,
-    // NgFor,
-    // SwitchCase,
-    // AttributeDirectives,
-    // Signals,
-  // Lsignals
-  ],
+    FlowiseChatbotComponent
+],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
