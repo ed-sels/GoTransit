@@ -3,15 +3,20 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Header } from '../header/header';
 import { TripService } from '../trip.service';
+import { LucideAngularModule, Calendar, PlaneLanding, PlaneTakeoff, Armchair } from 'lucide-angular';
 
 @Component({
   selector: 'app-trip-information',
   standalone: true,
-  imports: [CommonModule, Header],
+  imports: [CommonModule, Header, LucideAngularModule],
   templateUrl: './trip-information.html',
   styleUrl: './trip-information.css'
 })
 export class TripInformation {
+  readonly Calendar = Calendar;
+  readonly PlaneLanding = PlaneLanding;
+  readonly PlaneTakeoff = PlaneTakeoff;
+  readonly Armchair = Armchair;
 
   trip: any;
   selectedPickup: string = '';

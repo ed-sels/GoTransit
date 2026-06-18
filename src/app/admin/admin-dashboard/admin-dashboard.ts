@@ -3,15 +3,23 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AdminService } from '../../services/admin.service';
 import { TripService } from '../../trip.service';
+import { BadgePlus, Banknote, BookOpenText, Bus, House, LucideAngularModule, Users } from 'lucide-angular';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, LucideAngularModule],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css'
 })
 export class AdminDashboard implements OnInit {
+
+  readonly Users = Users;
+  readonly Bus = Bus;
+  readonly BookOpenText = BookOpenText;
+  readonly BadgePlus = BadgePlus;
+  readonly House = House;
+  readonly Banknote = Banknote;
 
   stats: any = {};
   recentBookings: any[] = [];

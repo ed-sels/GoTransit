@@ -5,15 +5,18 @@ import { Router } from '@angular/router';
 import { Header } from '../header/header';
 import { TripService } from '../trip.service';
 import { AuthService } from '../auth.service';
+import { LucideAngularModule, CircleCheck } from 'lucide-angular';
 
 @Component({
   selector: 'app-booking-confirmation',
   standalone: true,
-  imports: [CommonModule, FormsModule, Header],
+  imports: [CommonModule, FormsModule, Header, LucideAngularModule],
   templateUrl: './booking-confirmation.html',
   styleUrl: './booking-confirmation.css'
 })
 export class BookingConfirmation {
+
+  readonly CircleCheck = CircleCheck;
 
   trip: any;
   selectedSeats: number[] = [];

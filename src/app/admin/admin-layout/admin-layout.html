@@ -24,25 +24,33 @@
 
       <a routerLink="/admin" routerLinkActive="nav-active" [routerLinkActiveOptions]="{exact: true}"
          class="nav-item" (click)="closeMobileSidebar()">
-        <span class="nav-icon">📊</span>
+        <span class="nav-icon">
+          <lucide-angular [img]="LayoutDashboard"></lucide-angular>
+        </span>
         <span class="nav-label" *ngIf="!sidebarCollapsed">Dashboard</span>
       </a>
 
       <a routerLink="/admin/trips" routerLinkActive="nav-active"
          class="nav-item" (click)="closeMobileSidebar()">
-        <span class="nav-icon">🗺️</span>
+        <span class="nav-icon">
+          <lucide-angular [img]="SquareChartGantt"></lucide-angular>
+        </span>
         <span class="nav-label" *ngIf="!sidebarCollapsed">Manage Trips</span>
       </a>
 
       <a routerLink="/admin/users" routerLinkActive="nav-active"
          class="nav-item" (click)="closeMobileSidebar()">
-        <span class="nav-icon">👥</span>
+        <span class="nav-icon">
+          <lucide-angular [img]="Users"></lucide-angular>
+        </span>
         <span class="nav-label" *ngIf="!sidebarCollapsed">Users</span>
       </a>
 
       <a routerLink="/admin/bookings" routerLinkActive="nav-active"
          class="nav-item" (click)="closeMobileSidebar()">
-        <span class="nav-icon">🎫</span>
+        <span class="nav-icon">
+          <lucide-angular [img]="BookOpenText"></lucide-angular>
+        </span>
         <span class="nav-label" *ngIf="!sidebarCollapsed">Bookings</span>
       </a>
 
@@ -50,7 +58,9 @@
 
       <a routerLink="/admin/profile" routerLinkActive="nav-active"
          class="nav-item" (click)="closeMobileSidebar()">
-        <span class="nav-icon">⚙️</span>
+        <span class="nav-icon">
+          <lucide-angular [img]="UserPen"></lucide-angular>
+        </span>
         <span class="nav-label" *ngIf="!sidebarCollapsed">Profile</span>
       </a>
 
@@ -58,18 +68,21 @@
 
     <div class="sidebar-footer">
       <button class="footer-btn" (click)="goToPublicSite()">
-        <span class="nav-icon">🌐</span>
+        <span class="nav-icon">
+          <lucide-angular [img]="House"></lucide-angular>
+          </span>
         <span class="nav-label" *ngIf="!sidebarCollapsed">View Site</span>
       </button>
       <button class="footer-btn logout-btn" (click)="logout()">
-        <span class="nav-icon">🚪</span>
+        <span class="nav-icon">
+          <lucide-angular [img]="LogOut"></lucide-angular>
+        </span>
         <span class="nav-label" *ngIf="!sidebarCollapsed">Sign Out</span>
       </button>
     </div>
 
   </aside>
 
-  <!-- Main Content -->
   <main class="admin-main">
 
     <div class="admin-topbar">
